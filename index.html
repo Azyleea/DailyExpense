@@ -12,7 +12,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <style>
   :root {
     --bg: #F3F4FA; --surface: #FFFFFF; --ink: #14161F; --ink-soft: #767B8C;
@@ -141,104 +140,439 @@
 <body>
 <div id="root"></div>
 
-<script type="text/babel" data-presets="react">
-const { useState, useEffect, useMemo, useCallback, useRef } = React;
+<script>
+const {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef
+} = React;
 
 /* ---------------- Icons (inline SVG, no external icon package) ---------------- */
-const Icon = ({ children, size = 16, ...rest }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
-       strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...rest}>{children}</svg>
-);
-const PlusIcon = (p) => <Icon {...p}><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></Icon>;
-const TrashIcon = (p) => <Icon {...p}><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></Icon>;
-const TrendUpIcon = (p) => <Icon {...p}><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></Icon>;
-const TrendDownIcon = (p) => <Icon {...p}><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></Icon>;
-const WalletIcon = (p) => <Icon {...p}><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></Icon>;
-const XIcon = (p) => <Icon {...p}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></Icon>;
-const PencilIcon = (p) => <Icon {...p}><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></Icon>;
+const Icon = ({
+  children,
+  size = 16,
+  ...rest
+}) => /*#__PURE__*/React.createElement("svg", {
+  width: size,
+  height: size,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: "2",
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+  ...rest
+}, children);
+const PlusIcon = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("line", {
+  x1: "12",
+  y1: "5",
+  x2: "12",
+  y2: "19"
+}), /*#__PURE__*/React.createElement("line", {
+  x1: "5",
+  y1: "12",
+  x2: "19",
+  y2: "12"
+}));
+const TrashIcon = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("polyline", {
+  points: "3 6 5 6 21 6"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M10 11v6"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M14 11v6"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"
+}));
+const TrendUpIcon = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("polyline", {
+  points: "23 6 13.5 15.5 8.5 10.5 1 18"
+}), /*#__PURE__*/React.createElement("polyline", {
+  points: "17 6 23 6 23 12"
+}));
+const TrendDownIcon = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("polyline", {
+  points: "23 18 13.5 8.5 8.5 13.5 1 6"
+}), /*#__PURE__*/React.createElement("polyline", {
+  points: "17 18 23 18 23 12"
+}));
+const WalletIcon = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("path", {
+  d: "M21 12V7H5a2 2 0 0 1 0-4h14v4"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M3 5v14a2 2 0 0 0 2 2h16v-5"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M18 12a2 2 0 0 0 0 4h4v-4z"
+}));
+const XIcon = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("line", {
+  x1: "18",
+  y1: "6",
+  x2: "6",
+  y2: "18"
+}), /*#__PURE__*/React.createElement("line", {
+  x1: "6",
+  y1: "6",
+  x2: "18",
+  y2: "18"
+}));
+const PencilIcon = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("path", {
+  d: "M12 20h9"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"
+}));
 
 /* ---------------- Seed data ---------------- */
-const SEED_EXPENSES = [
-  { date: "2026-02-28", category: "Rumah", amount: 850, description: "Mac26" },
-  { date: "2026-02-28", category: "Myvi", amount: 620, description: "Mac26" },
-  { date: "2026-02-28", category: "Fuel + Tol", amount: 450, description: "TnG" },
-  { date: "2026-02-28", category: "Mama Aboh", amount: 400, description: "" },
-  { date: "2026-02-28", category: "UOB", amount: 200, description: "Mac26 - tabung dulu" },
-  { date: "2026-02-28", category: "Maxis", amount: 491.65, description: "Mac26" },
-  { date: "2026-02-28", category: "PruBSN", amount: 150, description: "Feb26" },
-  { date: "2026-02-28", category: "Personal", amount: 694, description: "SpayLater iPhone" },
-  { date: "2026-02-28", category: "Personal", amount: 661.66, description: "Atome iPhone" },
-  { date: "2026-02-28", category: "Personal", amount: 24.3, description: "Guardian" },
-  { date: "2026-02-28", category: "Others", amount: 24.38, description: "Parking KL East Mall" },
-  { date: "2026-02-28", category: "Food", amount: 37, description: "Bazar Tmn Melawati" },
-  { date: "2026-02-28", category: "Personal", amount: 50, description: "Tudung moonandstella" },
-  { date: "2026-03-01", category: "Food", amount: 78, description: "Bazar ipoh" },
-  { date: "2026-03-02", category: "Others", amount: 150, description: "Wyndham" },
-  { date: "2026-03-02", category: "Grocery", amount: 86.55, description: "Lotus" },
-  { date: "2026-03-02", category: "Food", amount: 15, description: "Bazar" },
-  { date: "2026-03-03", category: "Food", amount: 8, description: "Iftar Hotel Raia" },
-  { date: "2026-03-03", category: "Food", amount: 30.8, description: "Chagee" },
-  { date: "2026-03-03", category: "Food", amount: 12.9, description: "Family Mart" },
-  { date: "2026-03-03", category: "Personal", amount: 189.66, description: "Tdg bawal + ulanzi" },
-  { date: "2026-03-06", category: "Personal", amount: 12.55, description: "Shampoo" },
-  { date: "2026-03-07", category: "Others", amount: 53.5, description: "Diy" },
-  { date: "2026-03-08", category: "Others", amount: 116, description: "Pin - AbsolutBazar" },
-  { date: "2026-03-08", category: "Others", amount: 88, description: "SK mama" },
-  { date: "2026-03-08", category: "Personal", amount: 269, description: "Baju Raya" },
-  { date: "2026-03-08", category: "Others", amount: 40.65, description: "Hooga" },
-  { date: "2026-03-08", category: "Others", amount: 251.1, description: "Teva Bday" },
-  { date: "2026-03-08", category: "Food", amount: 59.4, description: "Taaza" },
-  { date: "2026-03-08", category: "UOB", amount: 100, description: "" },
-  { date: "2026-03-08", category: "Food", amount: 2, description: "Bazar ban pecah" },
-  { date: "2026-03-08", category: "Food", amount: 8, description: "Bazar" },
-  { date: "2026-03-09", category: "Food", amount: 34, description: "Grab" },
-  { date: "2026-03-11", category: "Personal", amount: 24, description: "Watson" },
-  { date: "2026-03-13", category: "Food", amount: 10, description: "Bazar" },
-  { date: "2026-03-14", category: "Personal", amount: 148, description: "Scalp treatment" },
-  { date: "2026-03-15", category: "Grocery", amount: 124.55, description: "Bintang" },
-  { date: "2026-03-15", category: "Food", amount: 10.3, description: "Roti" },
-  { date: "2026-03-15", category: "Food", amount: 24, description: "Bazar" },
-  { date: "2026-03-15", category: "Food", amount: 20, description: "Bazar" },
-  { date: "2026-03-15", category: "Grocery", amount: 45, description: "Extra jiha" },
-  { date: "2026-03-16", category: "Grocery", amount: 0.8, description: "Bawang" },
-  { date: "2026-03-16", category: "Grocery", amount: 4.4, description: "Suhun" },
-  { date: "2026-03-16", category: "Food", amount: 18, description: "Kuih bazar" },
-  { date: "2026-03-16", category: "Food", amount: 5, description: "Ktw bazar" },
-  { date: "2026-03-17", category: "Food", amount: 16, description: "AG top global" },
-  { date: "2026-03-18", category: "UOB", amount: 370, description: "Cc" },
-  { date: "2026-03-20", category: "Others", amount: 23, description: "Zakat fitrah" },
-  { date: "2026-03-23", category: "Fuel + Tol", amount: 60, description: "Setel" },
-  { date: "2026-03-23", category: "Grocery", amount: 9.5, description: "Sabun lantai" },
-].map((e, i) => ({ id: `seed-e-${i}`, ...e }));
-
-const SEED_INCOME = [
-  { date: "2026-02-27", source: "Opening balance", amount: 40.16, description: "" },
-  { date: "2026-02-27", source: "Salary", amount: 5744.3, description: "First" },
-  { date: "2026-02-28", source: "Maxis", amount: 80, description: "Cikcah" },
-  { date: "2026-02-28", source: "Pinjam", amount: 100, description: "Abe" },
-  { date: "2026-03-08", source: "Other", amount: 250, description: "Saving" },
-  { date: "2026-03-08", source: "Other", amount: 35, description: "Food Jiha" },
-  { date: "2026-03-08", source: "Other", amount: 100, description: "Saving cc" },
-  { date: "2026-03-14", source: "Other", amount: 140, description: "Saving" },
-  { date: "2026-03-15", source: "Other", amount: 200, description: "Saving" },
-  { date: "2026-03-15", source: "Other", amount: 130, description: "Jiha grocery roti" },
-  { date: "2026-03-17", source: "Other", amount: 22, description: "Cookies raya" },
-  { date: "2026-03-18", source: "Other", amount: 100, description: "Saving cc" },
-  { date: "2026-03-18", source: "Other", amount: 270, description: "Saving" },
-].map((e, i) => ({ id: `seed-i-${i}`, ...e }));
-
-const CATEGORIES = ["Rumah","Myvi","Fuel + Tol","Mama Aboh","Personal","Food","Grocery","UOB","Maxis","PruBSN","Bil","Others"];
-const INCOME_SOURCES = ["Salary","Opening balance","Maxis","Pinjam","Other"];
-
+const SEED_EXPENSES = [{
+  date: "2026-02-28",
+  category: "Rumah",
+  amount: 850,
+  description: "Mac26"
+}, {
+  date: "2026-02-28",
+  category: "Myvi",
+  amount: 620,
+  description: "Mac26"
+}, {
+  date: "2026-02-28",
+  category: "Fuel + Tol",
+  amount: 450,
+  description: "TnG"
+}, {
+  date: "2026-02-28",
+  category: "Mama Aboh",
+  amount: 400,
+  description: ""
+}, {
+  date: "2026-02-28",
+  category: "UOB",
+  amount: 200,
+  description: "Mac26 - tabung dulu"
+}, {
+  date: "2026-02-28",
+  category: "Maxis",
+  amount: 491.65,
+  description: "Mac26"
+}, {
+  date: "2026-02-28",
+  category: "PruBSN",
+  amount: 150,
+  description: "Feb26"
+}, {
+  date: "2026-02-28",
+  category: "Personal",
+  amount: 694,
+  description: "SpayLater iPhone"
+}, {
+  date: "2026-02-28",
+  category: "Personal",
+  amount: 661.66,
+  description: "Atome iPhone"
+}, {
+  date: "2026-02-28",
+  category: "Personal",
+  amount: 24.3,
+  description: "Guardian"
+}, {
+  date: "2026-02-28",
+  category: "Others",
+  amount: 24.38,
+  description: "Parking KL East Mall"
+}, {
+  date: "2026-02-28",
+  category: "Food",
+  amount: 37,
+  description: "Bazar Tmn Melawati"
+}, {
+  date: "2026-02-28",
+  category: "Personal",
+  amount: 50,
+  description: "Tudung moonandstella"
+}, {
+  date: "2026-03-01",
+  category: "Food",
+  amount: 78,
+  description: "Bazar ipoh"
+}, {
+  date: "2026-03-02",
+  category: "Others",
+  amount: 150,
+  description: "Wyndham"
+}, {
+  date: "2026-03-02",
+  category: "Grocery",
+  amount: 86.55,
+  description: "Lotus"
+}, {
+  date: "2026-03-02",
+  category: "Food",
+  amount: 15,
+  description: "Bazar"
+}, {
+  date: "2026-03-03",
+  category: "Food",
+  amount: 8,
+  description: "Iftar Hotel Raia"
+}, {
+  date: "2026-03-03",
+  category: "Food",
+  amount: 30.8,
+  description: "Chagee"
+}, {
+  date: "2026-03-03",
+  category: "Food",
+  amount: 12.9,
+  description: "Family Mart"
+}, {
+  date: "2026-03-03",
+  category: "Personal",
+  amount: 189.66,
+  description: "Tdg bawal + ulanzi"
+}, {
+  date: "2026-03-06",
+  category: "Personal",
+  amount: 12.55,
+  description: "Shampoo"
+}, {
+  date: "2026-03-07",
+  category: "Others",
+  amount: 53.5,
+  description: "Diy"
+}, {
+  date: "2026-03-08",
+  category: "Others",
+  amount: 116,
+  description: "Pin - AbsolutBazar"
+}, {
+  date: "2026-03-08",
+  category: "Others",
+  amount: 88,
+  description: "SK mama"
+}, {
+  date: "2026-03-08",
+  category: "Personal",
+  amount: 269,
+  description: "Baju Raya"
+}, {
+  date: "2026-03-08",
+  category: "Others",
+  amount: 40.65,
+  description: "Hooga"
+}, {
+  date: "2026-03-08",
+  category: "Others",
+  amount: 251.1,
+  description: "Teva Bday"
+}, {
+  date: "2026-03-08",
+  category: "Food",
+  amount: 59.4,
+  description: "Taaza"
+}, {
+  date: "2026-03-08",
+  category: "UOB",
+  amount: 100,
+  description: ""
+}, {
+  date: "2026-03-08",
+  category: "Food",
+  amount: 2,
+  description: "Bazar ban pecah"
+}, {
+  date: "2026-03-08",
+  category: "Food",
+  amount: 8,
+  description: "Bazar"
+}, {
+  date: "2026-03-09",
+  category: "Food",
+  amount: 34,
+  description: "Grab"
+}, {
+  date: "2026-03-11",
+  category: "Personal",
+  amount: 24,
+  description: "Watson"
+}, {
+  date: "2026-03-13",
+  category: "Food",
+  amount: 10,
+  description: "Bazar"
+}, {
+  date: "2026-03-14",
+  category: "Personal",
+  amount: 148,
+  description: "Scalp treatment"
+}, {
+  date: "2026-03-15",
+  category: "Grocery",
+  amount: 124.55,
+  description: "Bintang"
+}, {
+  date: "2026-03-15",
+  category: "Food",
+  amount: 10.3,
+  description: "Roti"
+}, {
+  date: "2026-03-15",
+  category: "Food",
+  amount: 24,
+  description: "Bazar"
+}, {
+  date: "2026-03-15",
+  category: "Food",
+  amount: 20,
+  description: "Bazar"
+}, {
+  date: "2026-03-15",
+  category: "Grocery",
+  amount: 45,
+  description: "Extra jiha"
+}, {
+  date: "2026-03-16",
+  category: "Grocery",
+  amount: 0.8,
+  description: "Bawang"
+}, {
+  date: "2026-03-16",
+  category: "Grocery",
+  amount: 4.4,
+  description: "Suhun"
+}, {
+  date: "2026-03-16",
+  category: "Food",
+  amount: 18,
+  description: "Kuih bazar"
+}, {
+  date: "2026-03-16",
+  category: "Food",
+  amount: 5,
+  description: "Ktw bazar"
+}, {
+  date: "2026-03-17",
+  category: "Food",
+  amount: 16,
+  description: "AG top global"
+}, {
+  date: "2026-03-18",
+  category: "UOB",
+  amount: 370,
+  description: "Cc"
+}, {
+  date: "2026-03-20",
+  category: "Others",
+  amount: 23,
+  description: "Zakat fitrah"
+}, {
+  date: "2026-03-23",
+  category: "Fuel + Tol",
+  amount: 60,
+  description: "Setel"
+}, {
+  date: "2026-03-23",
+  category: "Grocery",
+  amount: 9.5,
+  description: "Sabun lantai"
+}].map((e, i) => ({
+  id: `seed-e-${i}`,
+  ...e
+}));
+const SEED_INCOME = [{
+  date: "2026-02-27",
+  source: "Opening balance",
+  amount: 40.16,
+  description: ""
+}, {
+  date: "2026-02-27",
+  source: "Salary",
+  amount: 5744.3,
+  description: "First"
+}, {
+  date: "2026-02-28",
+  source: "Maxis",
+  amount: 80,
+  description: "Cikcah"
+}, {
+  date: "2026-02-28",
+  source: "Pinjam",
+  amount: 100,
+  description: "Abe"
+}, {
+  date: "2026-03-08",
+  source: "Other",
+  amount: 250,
+  description: "Saving"
+}, {
+  date: "2026-03-08",
+  source: "Other",
+  amount: 35,
+  description: "Food Jiha"
+}, {
+  date: "2026-03-08",
+  source: "Other",
+  amount: 100,
+  description: "Saving cc"
+}, {
+  date: "2026-03-14",
+  source: "Other",
+  amount: 140,
+  description: "Saving"
+}, {
+  date: "2026-03-15",
+  source: "Other",
+  amount: 200,
+  description: "Saving"
+}, {
+  date: "2026-03-15",
+  source: "Other",
+  amount: 130,
+  description: "Jiha grocery roti"
+}, {
+  date: "2026-03-17",
+  source: "Other",
+  amount: 22,
+  description: "Cookies raya"
+}, {
+  date: "2026-03-18",
+  source: "Other",
+  amount: 100,
+  description: "Saving cc"
+}, {
+  date: "2026-03-18",
+  source: "Other",
+  amount: 270,
+  description: "Saving"
+}].map((e, i) => ({
+  id: `seed-i-${i}`,
+  ...e
+}));
+const CATEGORIES = ["Rumah", "Myvi", "Fuel + Tol", "Mama Aboh", "Personal", "Food", "Grocery", "UOB", "Maxis", "PruBSN", "Bil", "Others"];
+const INCOME_SOURCES = ["Salary", "Opening balance", "Maxis", "Pinjam", "Other"];
 const CAT_TONE = {
-  Rumah: "#3D5AFE", Myvi: "#FF8A3D", "Fuel + Tol": "#7C5CFC", "Mama Aboh": "#FF5D8F",
-  Personal: "#17B890", Food: "#FFB020", Grocery: "#22C1C3", UOB: "#5B6EE8",
-  Maxis: "#FF6B57", PruBSN: "#9C6ADE", Bil: "#4FD1C5", Others: "#94A0B4",
+  Rumah: "#3D5AFE",
+  Myvi: "#FF8A3D",
+  "Fuel + Tol": "#7C5CFC",
+  "Mama Aboh": "#FF5D8F",
+  Personal: "#17B890",
+  Food: "#FFB020",
+  Grocery: "#22C1C3",
+  UOB: "#5B6EE8",
+  Maxis: "#FF6B57",
+  PruBSN: "#9C6ADE",
+  Bil: "#4FD1C5",
+  Others: "#94A0B4"
 };
-const toneFor = (c) => CAT_TONE[c] || "#7A756B";
-
-const fmt = (n) => new Intl.NumberFormat("en-MY", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(Math.abs(n || 0));
-const monthLabel = (ym) => { const [y,m] = ym.split("-"); return new Date(Number(y), Number(m)-1, 1).toLocaleDateString("en-MY", { month: "short", year: "numeric" }); };
+const toneFor = c => CAT_TONE[c] || "#7A756B";
+const fmt = n => new Intl.NumberFormat("en-MY", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+}).format(Math.abs(n || 0));
+const monthLabel = ym => {
+  const [y, m] = ym.split("-");
+  return new Date(Number(y), Number(m) - 1, 1).toLocaleDateString("en-MY", {
+    month: "short",
+    year: "numeric"
+  });
+};
 const todayStr = () => new Date().toISOString().slice(0, 10);
 const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
 
@@ -248,12 +582,17 @@ function loadStore() {
   try {
     const raw = localStorage.getItem(STORE_KEY);
     if (raw) return JSON.parse(raw);
-  } catch (e) { console.error(e); }
+  } catch (e) {
+    console.error(e);
+  }
   return null;
 }
 function saveStore(data) {
-  try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); }
-  catch (e) { console.error(e); }
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify(data));
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 /* ---------------- App ---------------- */
@@ -271,7 +610,6 @@ function App() {
   const [saveState, setSaveState] = useState("idle");
   const [toast, setToast] = useState(null);
   const toastTimer = useRef(null);
-
   useEffect(() => {
     const data = loadStore();
     if (data) {
@@ -284,322 +622,531 @@ function App() {
     }
     setLoaded(true);
   }, []);
-
   useEffect(() => {
     if (!loaded) return;
     setSaveState("saving");
-    const t = setTimeout(() => { saveStore({ expenses, incomes, budgets }); setSaveState("saved"); }, 250);
+    const t = setTimeout(() => {
+      saveStore({
+        expenses,
+        incomes,
+        budgets
+      });
+      setSaveState("saved");
+    }, 250);
     return () => clearTimeout(t);
   }, [expenses, incomes, budgets, loaded]);
-
   const showUndoToast = useCallback((kind, item) => {
     if (toastTimer.current) clearTimeout(toastTimer.current);
-    setToast({ kind, item });
+    setToast({
+      kind,
+      item
+    });
     toastTimer.current = setTimeout(() => setToast(null), 5000);
   }, []);
-
-  const addExpense = useCallback((e) => setExpenses((prev) => [{ id: uid(), ...e }, ...prev]), []);
-  const addIncome = useCallback((e) => setIncomes((prev) => [{ id: uid(), ...e }, ...prev]), []);
-  const updateExpense = useCallback((id, patch) => setExpenses((prev) => prev.map((x) => x.id === id ? { ...x, ...patch } : x)), []);
-  const updateIncome = useCallback((id, patch) => setIncomes((prev) => prev.map((x) => x.id === id ? { ...x, ...patch } : x)), []);
-
-  const removeExpense = useCallback((id) => {
-    setExpenses((prev) => { const item = prev.find((x) => x.id === id); if (item) showUndoToast("expense", item); return prev.filter((x) => x.id !== id); });
+  const addExpense = useCallback(e => setExpenses(prev => [{
+    id: uid(),
+    ...e
+  }, ...prev]), []);
+  const addIncome = useCallback(e => setIncomes(prev => [{
+    id: uid(),
+    ...e
+  }, ...prev]), []);
+  const updateExpense = useCallback((id, patch) => setExpenses(prev => prev.map(x => x.id === id ? {
+    ...x,
+    ...patch
+  } : x)), []);
+  const updateIncome = useCallback((id, patch) => setIncomes(prev => prev.map(x => x.id === id ? {
+    ...x,
+    ...patch
+  } : x)), []);
+  const removeExpense = useCallback(id => {
+    setExpenses(prev => {
+      const item = prev.find(x => x.id === id);
+      if (item) showUndoToast("expense", item);
+      return prev.filter(x => x.id !== id);
+    });
   }, [showUndoToast]);
-  const removeIncome = useCallback((id) => {
-    setIncomes((prev) => { const item = prev.find((x) => x.id === id); if (item) showUndoToast("income", item); return prev.filter((x) => x.id !== id); });
+  const removeIncome = useCallback(id => {
+    setIncomes(prev => {
+      const item = prev.find(x => x.id === id);
+      if (item) showUndoToast("income", item);
+      return prev.filter(x => x.id !== id);
+    });
   }, [showUndoToast]);
-
   const undoDelete = useCallback(() => {
     if (!toast) return;
-    if (toast.kind === "expense") setExpenses((prev) => [toast.item, ...prev]);
-    else setIncomes((prev) => [toast.item, ...prev]);
+    if (toast.kind === "expense") setExpenses(prev => [toast.item, ...prev]);else setIncomes(prev => [toast.item, ...prev]);
     if (toastTimer.current) clearTimeout(toastTimer.current);
     setToast(null);
   }, [toast]);
-
   const setBudget = useCallback((category, amount) => {
-    setBudgets((prev) => { const next = { ...prev }; if (amount == null) delete next[category]; else next[category] = amount; return next; });
+    setBudgets(prev => {
+      const next = {
+        ...prev
+      };
+      if (amount == null) delete next[category];else next[category] = amount;
+      return next;
+    });
   }, []);
-
   const months = useMemo(() => {
     const set = new Set();
-    expenses.forEach((e) => set.add(e.date.slice(0, 7)));
-    incomes.forEach((e) => set.add(e.date.slice(0, 7)));
+    expenses.forEach(e => set.add(e.date.slice(0, 7)));
+    incomes.forEach(e => set.add(e.date.slice(0, 7)));
     return Array.from(set).sort().reverse();
   }, [expenses, incomes]);
-
   const filteredExpenses = useMemo(() => {
-    let list = monthFilter === "all" ? expenses : expenses.filter((e) => e.date.slice(0, 7) === monthFilter);
-    if (categoryFilter) list = list.filter((e) => e.category === categoryFilter);
+    let list = monthFilter === "all" ? expenses : expenses.filter(e => e.date.slice(0, 7) === monthFilter);
+    if (categoryFilter) list = list.filter(e => e.category === categoryFilter);
     return list;
   }, [expenses, monthFilter, categoryFilter]);
-
   const filteredIncomes = useMemo(() => {
     if (categoryFilter) return [];
-    return monthFilter === "all" ? incomes : incomes.filter((e) => e.date.slice(0, 7) === monthFilter);
+    return monthFilter === "all" ? incomes : incomes.filter(e => e.date.slice(0, 7) === monthFilter);
   }, [incomes, monthFilter, categoryFilter]);
-
   const totalExpense = useMemo(() => filteredExpenses.reduce((s, e) => s + Number(e.amount || 0), 0), [filteredExpenses]);
   const totalIncome = useMemo(() => filteredIncomes.reduce((s, e) => s + Number(e.amount || 0), 0), [filteredIncomes]);
   const net = totalIncome - totalExpense;
-
   const allTimeBalance = useMemo(() => {
     const inc = incomes.reduce((s, e) => s + Number(e.amount || 0), 0);
     const exp = expenses.reduce((s, e) => s + Number(e.amount || 0), 0);
     return inc - exp;
   }, [incomes, expenses]);
-
-  const categoryBaseExpenses = useMemo(() => monthFilter === "all" ? expenses : expenses.filter((e) => e.date.slice(0, 7) === monthFilter), [expenses, monthFilter]);
+  const categoryBaseExpenses = useMemo(() => monthFilter === "all" ? expenses : expenses.filter(e => e.date.slice(0, 7) === monthFilter), [expenses, monthFilter]);
   const categoryTotals = useMemo(() => {
     const map = {};
-    categoryBaseExpenses.forEach((e) => { map[e.category] = (map[e.category] || 0) + Number(e.amount || 0); });
-    return Object.entries(map).map(([category, total]) => ({ category, total })).sort((a, b) => b.total - a.total);
+    categoryBaseExpenses.forEach(e => {
+      map[e.category] = (map[e.category] || 0) + Number(e.amount || 0);
+    });
+    return Object.entries(map).map(([category, total]) => ({
+      category,
+      total
+    })).sort((a, b) => b.total - a.total);
   }, [categoryBaseExpenses]);
-
   const monthlyTrend = useMemo(() => {
     const map = {};
-    expenses.forEach((e) => { const k = e.date.slice(0, 7); map[k] = map[k] || { month: k, income: 0, expense: 0 }; map[k].expense += Number(e.amount || 0); });
-    incomes.forEach((e) => { const k = e.date.slice(0, 7); map[k] = map[k] || { month: k, income: 0, expense: 0 }; map[k].income += Number(e.amount || 0); });
-    return Object.values(map).sort((a, b) => a.month.localeCompare(b.month)).map((r) => ({ ...r, label: monthLabel(r.month) }));
+    expenses.forEach(e => {
+      const k = e.date.slice(0, 7);
+      map[k] = map[k] || {
+        month: k,
+        income: 0,
+        expense: 0
+      };
+      map[k].expense += Number(e.amount || 0);
+    });
+    incomes.forEach(e => {
+      const k = e.date.slice(0, 7);
+      map[k] = map[k] || {
+        month: k,
+        income: 0,
+        expense: 0
+      };
+      map[k].income += Number(e.amount || 0);
+    });
+    return Object.values(map).sort((a, b) => a.month.localeCompare(b.month)).map(r => ({
+      ...r,
+      label: monthLabel(r.month)
+    }));
   }, [expenses, incomes]);
-
   const combinedLog = useMemo(() => {
-    const a = filteredExpenses.map((e) => ({ ...e, kind: "expense" }));
-    const b = filteredIncomes.map((e) => ({ ...e, kind: "income" }));
-    return [...a, ...b].sort((x, y) => (x.date < y.date ? 1 : x.date > y.date ? -1 : 0));
+    const a = filteredExpenses.map(e => ({
+      ...e,
+      kind: "expense"
+    }));
+    const b = filteredIncomes.map(e => ({
+      ...e,
+      kind: "income"
+    }));
+    return [...a, ...b].sort((x, y) => x.date < y.date ? 1 : x.date > y.date ? -1 : 0);
   }, [filteredExpenses, filteredIncomes]);
-
-  const openAdd = (type) => { setEditing(null); setEntryType(type); setShowForm(true); };
-  const openEdit = (kind, id) => { setEditing({ kind, id }); setEntryType(kind); setShowForm(true); };
+  const openAdd = type => {
+    setEditing(null);
+    setEntryType(type);
+    setShowForm(true);
+  };
+  const openEdit = (kind, id) => {
+    setEditing({
+      kind,
+      id
+    });
+    setEntryType(kind);
+    setShowForm(true);
+  };
   const editingItem = useMemo(() => {
     if (!editing) return null;
     const list = editing.kind === "expense" ? expenses : incomes;
-    return list.find((x) => x.id === editing.id) || null;
+    return list.find(x => x.id === editing.id) || null;
   }, [editing, expenses, incomes]);
-
-  const filterByCategory = (cat) => { setCategoryFilter((prev) => prev === cat ? null : cat); setTab("log"); };
-  const filterByMonth = (ym) => { setMonthFilter(ym); setTab("log"); };
-
-  if (!loaded) return <div className="centered"><div className="loading-mark">RM</div></div>;
-
-  return (
-    <React.Fragment>
-      <header className="topbar">
-        <div className="brand">
-          <span className="brand-mark">RM</span>
-          <div><h1>Ledger</h1><p className="sub">Daily money log</p></div>
-        </div>
-        <div className={`save-pill ${saveState}`}>{saveState === "saving" ? "saving…" : "saved"}</div>
-      </header>
-
-      <section className="balance-block">
-        <div className="balance-main">
-          <span className="label">Balance</span>
-          <span className={`balance-figure ${allTimeBalance < 0 ? "neg" : ""}`}>RM {fmt(allTimeBalance)}</span>
-        </div>
-        <div className="balance-stats">
-          <div className="stat income"><TrendUpIcon size={14}/><span>RM {fmt(totalIncome)}</span></div>
-          <div className="stat expense"><TrendDownIcon size={14}/><span>RM {fmt(totalExpense)}</span></div>
-          <div className={`stat net ${net < 0 ? "neg" : "pos"}`}><WalletIcon size={14}/><span>{net < 0 ? "-" : "+"}RM {fmt(net)}</span></div>
-        </div>
-      </section>
-
-      <div className="month-scroll">
-        <button className={`chip ${monthFilter === "all" ? "active" : ""}`} onClick={() => setMonthFilter("all")}>All time</button>
-        {months.map((m) => <button key={m} className={`chip ${monthFilter === m ? "active" : ""}`} onClick={() => setMonthFilter(m)}>{monthLabel(m)}</button>)}
-      </div>
-
-      {categoryFilter && (
-        <div className="filter-banner">
-          <span>Category: <strong>{categoryFilter}</strong></span>
-          <button onClick={() => setCategoryFilter(null)} aria-label="Clear category filter"><XIcon size={13}/></button>
-        </div>
-      )}
-
-      <nav className="tabs">
-        {[["log","Log"],["overview","Overview"]].map(([key,name]) => (
-          <button key={key} className={`tab ${tab === key ? "active" : ""}`} onClick={() => setTab(key)}>{name}</button>
-        ))}
-      </nav>
-
-      <main className="content">
-        {tab === "log" && <LogView items={combinedLog} onRemoveExpense={removeExpense} onRemoveIncome={removeIncome} onEdit={openEdit} />}
-        {tab === "overview" && (
-          <OverviewView categoryTotals={categoryTotals} monthlyTrend={monthlyTrend} budgets={budgets}
-            onSetBudget={setBudget} onFilterCategory={filterByCategory} onFilterMonth={filterByMonth} />
-        )}
-      </main>
-
-      <button className="fab" onClick={() => openAdd("expense")} aria-label="Add entry"><PlusIcon size={22}/></button>
-
-      {showForm && (
-        <EntryForm entryType={entryType} setEntryType={setEntryType} initial={editingItem}
-          onClose={() => { setShowForm(false); setEditing(null); }}
-          onSubmitExpense={(data) => { if (editingItem) updateExpense(editingItem.id, data); else addExpense(data); setShowForm(false); setEditing(null); }}
-          onSubmitIncome={(data) => { if (editingItem) updateIncome(editingItem.id, data); else addIncome(data); setShowForm(false); setEditing(null); }} />
-      )}
-
-      {toast && (
-        <div className="toast">
-          <span>Deleted RM {fmt(toast.item.amount)}{toast.kind === "expense" ? ` · ${toast.item.category}` : ` · ${toast.item.source}`}</span>
-          <button onClick={undoDelete}>Undo</button>
-        </div>
-      )}
-    </React.Fragment>
-  );
+  const filterByCategory = cat => {
+    setCategoryFilter(prev => prev === cat ? null : cat);
+    setTab("log");
+  };
+  const filterByMonth = ym => {
+    setMonthFilter(ym);
+    setTab("log");
+  };
+  if (!loaded) return /*#__PURE__*/React.createElement("div", {
+    className: "centered"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "loading-mark"
+  }, "RM"));
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("header", {
+    className: "topbar"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "brand"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "brand-mark"
+  }, "RM"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "Ledger"), /*#__PURE__*/React.createElement("p", {
+    className: "sub"
+  }, "Daily money log"))), /*#__PURE__*/React.createElement("div", {
+    className: `save-pill ${saveState}`
+  }, saveState === "saving" ? "saving…" : "saved")), /*#__PURE__*/React.createElement("section", {
+    className: "balance-block"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "balance-main"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "label"
+  }, "Balance"), /*#__PURE__*/React.createElement("span", {
+    className: `balance-figure ${allTimeBalance < 0 ? "neg" : ""}`
+  }, "RM ", fmt(allTimeBalance))), /*#__PURE__*/React.createElement("div", {
+    className: "balance-stats"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "stat income"
+  }, /*#__PURE__*/React.createElement(TrendUpIcon, {
+    size: 14
+  }), /*#__PURE__*/React.createElement("span", null, "RM ", fmt(totalIncome))), /*#__PURE__*/React.createElement("div", {
+    className: "stat expense"
+  }, /*#__PURE__*/React.createElement(TrendDownIcon, {
+    size: 14
+  }), /*#__PURE__*/React.createElement("span", null, "RM ", fmt(totalExpense))), /*#__PURE__*/React.createElement("div", {
+    className: `stat net ${net < 0 ? "neg" : "pos"}`
+  }, /*#__PURE__*/React.createElement(WalletIcon, {
+    size: 14
+  }), /*#__PURE__*/React.createElement("span", null, net < 0 ? "-" : "+", "RM ", fmt(net))))), /*#__PURE__*/React.createElement("div", {
+    className: "month-scroll"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: `chip ${monthFilter === "all" ? "active" : ""}`,
+    onClick: () => setMonthFilter("all")
+  }, "All time"), months.map(m => /*#__PURE__*/React.createElement("button", {
+    key: m,
+    className: `chip ${monthFilter === m ? "active" : ""}`,
+    onClick: () => setMonthFilter(m)
+  }, monthLabel(m)))), categoryFilter && /*#__PURE__*/React.createElement("div", {
+    className: "filter-banner"
+  }, /*#__PURE__*/React.createElement("span", null, "Category: ", /*#__PURE__*/React.createElement("strong", null, categoryFilter)), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setCategoryFilter(null),
+    "aria-label": "Clear category filter"
+  }, /*#__PURE__*/React.createElement(XIcon, {
+    size: 13
+  }))), /*#__PURE__*/React.createElement("nav", {
+    className: "tabs"
+  }, [["log", "Log"], ["overview", "Overview"]].map(([key, name]) => /*#__PURE__*/React.createElement("button", {
+    key: key,
+    className: `tab ${tab === key ? "active" : ""}`,
+    onClick: () => setTab(key)
+  }, name))), /*#__PURE__*/React.createElement("main", {
+    className: "content"
+  }, tab === "log" && /*#__PURE__*/React.createElement(LogView, {
+    items: combinedLog,
+    onRemoveExpense: removeExpense,
+    onRemoveIncome: removeIncome,
+    onEdit: openEdit
+  }), tab === "overview" && /*#__PURE__*/React.createElement(OverviewView, {
+    categoryTotals: categoryTotals,
+    monthlyTrend: monthlyTrend,
+    budgets: budgets,
+    onSetBudget: setBudget,
+    onFilterCategory: filterByCategory,
+    onFilterMonth: filterByMonth
+  })), /*#__PURE__*/React.createElement("button", {
+    className: "fab",
+    onClick: () => openAdd("expense"),
+    "aria-label": "Add entry"
+  }, /*#__PURE__*/React.createElement(PlusIcon, {
+    size: 22
+  })), showForm && /*#__PURE__*/React.createElement(EntryForm, {
+    entryType: entryType,
+    setEntryType: setEntryType,
+    initial: editingItem,
+    onClose: () => {
+      setShowForm(false);
+      setEditing(null);
+    },
+    onSubmitExpense: data => {
+      if (editingItem) updateExpense(editingItem.id, data);else addExpense(data);
+      setShowForm(false);
+      setEditing(null);
+    },
+    onSubmitIncome: data => {
+      if (editingItem) updateIncome(editingItem.id, data);else addIncome(data);
+      setShowForm(false);
+      setEditing(null);
+    }
+  }), toast && /*#__PURE__*/React.createElement("div", {
+    className: "toast"
+  }, /*#__PURE__*/React.createElement("span", null, "Deleted RM ", fmt(toast.item.amount), toast.kind === "expense" ? ` · ${toast.item.category}` : ` · ${toast.item.source}`), /*#__PURE__*/React.createElement("button", {
+    onClick: undoDelete
+  }, "Undo")));
 }
-
-function LogView({ items, onRemoveExpense, onRemoveIncome, onEdit }) {
-  if (items.length === 0) return <p className="empty">No entries for this filter yet. Tap + to add one.</p>;
+function LogView({
+  items,
+  onRemoveExpense,
+  onRemoveIncome,
+  onEdit
+}) {
+  if (items.length === 0) return /*#__PURE__*/React.createElement("p", {
+    className: "empty"
+  }, "No entries for this filter yet. Tap + to add one.");
   const groups = [];
   let lastDate = null;
-  items.forEach((it) => {
-    if (it.date !== lastDate) { groups.push({ date: it.date, rows: [] }); lastDate = it.date; }
+  items.forEach(it => {
+    if (it.date !== lastDate) {
+      groups.push({
+        date: it.date,
+        rows: []
+      });
+      lastDate = it.date;
+    }
     groups[groups.length - 1].rows.push(it);
   });
-  return (
-    <div className="log">
-      <p className="hint">Tap an entry to edit · swipe left to delete</p>
-      {groups.map((g) => (
-        <div key={g.date} className="day-group">
-          <div className="day-heading">{new Date(g.date + "T00:00:00").toLocaleDateString("en-MY", { weekday: "short", day: "numeric", month: "short" })}</div>
-          {g.rows.map((row) => (
-            <LogRow key={row.id} row={row} onEdit={() => onEdit(row.kind, row.id)}
-              onDelete={() => row.kind === "income" ? onRemoveIncome(row.id) : onRemoveExpense(row.id)} />
-          ))}
-        </div>
-      ))}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "log"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "hint"
+  }, "Tap an entry to edit · swipe left to delete"), groups.map(g => /*#__PURE__*/React.createElement("div", {
+    key: g.date,
+    className: "day-group"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "day-heading"
+  }, new Date(g.date + "T00:00:00").toLocaleDateString("en-MY", {
+    weekday: "short",
+    day: "numeric",
+    month: "short"
+  })), g.rows.map(row => /*#__PURE__*/React.createElement(LogRow, {
+    key: row.id,
+    row: row,
+    onEdit: () => onEdit(row.kind, row.id),
+    onDelete: () => row.kind === "income" ? onRemoveIncome(row.id) : onRemoveExpense(row.id)
+  })))));
 }
-
-function LogRow({ row, onEdit, onDelete }) {
+function LogRow({
+  row,
+  onEdit,
+  onDelete
+}) {
   const [dragX, setDragX] = useState(0);
   const [dragging, setDragging] = useState(false);
-  const start = useRef({ x: 0, y: 0 });
+  const start = useRef({
+    x: 0,
+    y: 0
+  });
   const moved = useRef(false);
   const THRESH = -68;
-
-  const onPointerDown = (e) => { start.current = { x: e.clientX, y: e.clientY }; moved.current = false; setDragging(true); };
-  const onPointerMove = (e) => {
+  const onPointerDown = e => {
+    start.current = {
+      x: e.clientX,
+      y: e.clientY
+    };
+    moved.current = false;
+    setDragging(true);
+  };
+  const onPointerMove = e => {
     if (!dragging) return;
-    const dx = e.clientX - start.current.x, dy = e.clientY - start.current.y;
+    const dx = e.clientX - start.current.x,
+      dy = e.clientY - start.current.y;
     if (Math.abs(dx) > 6 || Math.abs(dy) > 6) moved.current = true;
     if (Math.abs(dx) > Math.abs(dy)) setDragX(Math.min(0, Math.max(dx, -100)));
   };
   const finish = () => {
     setDragging(false);
-    if (dragX < THRESH) onDelete(); else if (!moved.current) onEdit();
+    if (dragX < THRESH) onDelete();else if (!moved.current) onEdit();
     setDragX(0);
   };
-
-  return (
-    <div className="row-wrap">
-      <div className="row-delete-bg"><TrashIcon size={16}/></div>
-      <div className="row" style={{ transform: `translateX(${dragX}px)`, transition: dragging ? "none" : "transform 0.2s ease" }}
-        onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={finish} onPointerCancel={finish}>
-        <span className="dot" style={{ background: row.kind === "income" ? "#5B7566" : toneFor(row.category) }} />
-        <div className="row-main">
-          <div className="row-top">
-            <span className="row-title">{row.kind === "income" ? row.source : row.category}</span>
-            <span className={`row-amount ${row.kind === "income" ? "pos" : ""}`}>{row.kind === "income" ? "+" : "−"}RM {fmt(row.amount)}</span>
-          </div>
-          {row.description ? <span className="row-desc">{row.description}</span> : null}
-        </div>
-        <button className="row-delete-btn" onClick={(e) => { e.stopPropagation(); onDelete(); }} aria-label="Delete entry"><TrashIcon size={14}/></button>
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "row-wrap"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "row-delete-bg"
+  }, /*#__PURE__*/React.createElement(TrashIcon, {
+    size: 16
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "row",
+    style: {
+      transform: `translateX(${dragX}px)`,
+      transition: dragging ? "none" : "transform 0.2s ease"
+    },
+    onPointerDown: onPointerDown,
+    onPointerMove: onPointerMove,
+    onPointerUp: finish,
+    onPointerCancel: finish
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "dot",
+    style: {
+      background: row.kind === "income" ? "#5B7566" : toneFor(row.category)
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "row-main"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "row-top"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "row-title"
+  }, row.kind === "income" ? row.source : row.category), /*#__PURE__*/React.createElement("span", {
+    className: `row-amount ${row.kind === "income" ? "pos" : ""}`
+  }, row.kind === "income" ? "+" : "−", "RM ", fmt(row.amount))), row.description ? /*#__PURE__*/React.createElement("span", {
+    className: "row-desc"
+  }, row.description) : null), /*#__PURE__*/React.createElement("button", {
+    className: "row-delete-btn",
+    onClick: e => {
+      e.stopPropagation();
+      onDelete();
+    },
+    "aria-label": "Delete entry"
+  }, /*#__PURE__*/React.createElement(TrashIcon, {
+    size: 14
+  }))));
 }
-
-function OverviewView({ categoryTotals, monthlyTrend, budgets, onSetBudget, onFilterCategory, onFilterMonth }) {
-  const maxCat = Math.max(1, ...categoryTotals.map((c) => c.total));
+function OverviewView({
+  categoryTotals,
+  monthlyTrend,
+  budgets,
+  onSetBudget,
+  onFilterCategory,
+  onFilterMonth
+}) {
+  const maxCat = Math.max(1, ...categoryTotals.map(c => c.total));
   const [budgetEditing, setBudgetEditing] = useState(null);
   const [draft, setDraft] = useState("");
-
-  const openBudgetEdit = (cat) => {
-    if (budgetEditing === cat) { setBudgetEditing(null); return; }
-    setBudgetEditing(cat); setDraft(budgets[cat] != null ? String(budgets[cat]) : "");
+  const openBudgetEdit = cat => {
+    if (budgetEditing === cat) {
+      setBudgetEditing(null);
+      return;
+    }
+    setBudgetEditing(cat);
+    setDraft(budgets[cat] != null ? String(budgets[cat]) : "");
   };
-  const saveBudget = (cat) => { const v = parseFloat(draft); onSetBudget(cat, v > 0 ? v : null); setBudgetEditing(null); };
-  const clearBudget = (cat) => { onSetBudget(cat, null); setBudgetEditing(null); };
-
-  const maxTrend = Math.max(1, ...monthlyTrend.map((m) => Math.max(m.income, m.expense)));
-
-  return (
-    <div className="overview">
-      <section className="panel">
-        <h2>By category</h2>
-        <p className="panel-hint">Tap a bar to view those entries · tap the name to set a budget</p>
-        {categoryTotals.length === 0 ? <p className="empty">Nothing spent this period.</p> : (
-          <div className="cat-bars">
-            {categoryTotals.map((c) => {
-              const budget = budgets[c.category];
-              const over = budget != null && c.total > budget;
-              const nearLimit = budget != null && !over && c.total / budget >= 0.8;
-              const fillColor = over ? "#A6503B" : nearLimit ? "#C9A227" : toneFor(c.category);
-              return (
-                <div className="cat-item" key={c.category}>
-                  <div className="cat-row">
-                    <button className="cat-name" onClick={() => openBudgetEdit(c.category)}>{c.category}<PencilIcon size={10}/></button>
-                    <div className="cat-track" onClick={() => onFilterCategory(c.category)}>
-                      <div className="cat-fill" style={{ width: `${Math.min(100, (c.total / maxCat) * 100)}%`, background: fillColor }} />
-                    </div>
-                    <span className="cat-total">RM {fmt(c.total)}</span>
-                  </div>
-                  {budget != null && (
-                    <div className={`budget-line ${over ? "over" : nearLimit ? "warn" : ""}`}>
-                      RM {fmt(c.total)} of RM {fmt(budget)} budget{over ? " — over" : nearLimit ? " — near limit" : ""}
-                    </div>
-                  )}
-                  {budgetEditing === c.category && (
-                    <div className="budget-editor">
-                      <input type="number" inputMode="decimal" placeholder="Monthly budget (RM)" value={draft} onChange={(e) => setDraft(e.target.value)} autoFocus />
-                      <button className="mini-btn" onClick={() => saveBudget(c.category)}>Save</button>
-                      {budget != null && <button className="mini-btn ghost" onClick={() => clearBudget(c.category)}>Clear</button>}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </section>
-
-      <section className="panel">
-        <h2>Monthly trend</h2>
-        <p className="panel-hint">Tap a column to jump to that month's log</p>
-        <div className="bar-chart">
-          {monthlyTrend.map((m) => (
-            <div className="bar-col" key={m.month} onClick={() => onFilterMonth(m.month)}>
-              <div className="bar-pair">
-                <div className="bar-seg" style={{ height: `${(m.income / maxTrend) * 140}px`, background: "#5B7566" }} title={`Income RM ${fmt(m.income)}`} />
-                <div className="bar-seg" style={{ height: `${(m.expense / maxTrend) * 140}px`, background: "#A6503B" }} title={`Expense RM ${fmt(m.expense)}`} />
-              </div>
-              <span className="bar-col-label">{m.label.split(" ")[0]}</span>
-            </div>
-          ))}
-        </div>
-        <div className="chart-legend">
-          <span><span className="legend-dot" style={{ background: "#5B7566" }}/>Income</span>
-          <span><span className="legend-dot" style={{ background: "#A6503B" }}/>Expense</span>
-        </div>
-      </section>
-
-      <section className="panel">
-        <h2>Net balance over time</h2>
-        <NetLineChart data={monthlyTrend.map((m) => ({ ...m, net: m.income - m.expense }))} />
-      </section>
-    </div>
-  );
+  const saveBudget = cat => {
+    const v = parseFloat(draft);
+    onSetBudget(cat, v > 0 ? v : null);
+    setBudgetEditing(null);
+  };
+  const clearBudget = cat => {
+    onSetBudget(cat, null);
+    setBudgetEditing(null);
+  };
+  const maxTrend = Math.max(1, ...monthlyTrend.map(m => Math.max(m.income, m.expense)));
+  return /*#__PURE__*/React.createElement("div", {
+    className: "overview"
+  }, /*#__PURE__*/React.createElement("section", {
+    className: "panel"
+  }, /*#__PURE__*/React.createElement("h2", null, "By category"), /*#__PURE__*/React.createElement("p", {
+    className: "panel-hint"
+  }, "Tap a bar to view those entries · tap the name to set a budget"), categoryTotals.length === 0 ? /*#__PURE__*/React.createElement("p", {
+    className: "empty"
+  }, "Nothing spent this period.") : /*#__PURE__*/React.createElement("div", {
+    className: "cat-bars"
+  }, categoryTotals.map(c => {
+    const budget = budgets[c.category];
+    const over = budget != null && c.total > budget;
+    const nearLimit = budget != null && !over && c.total / budget >= 0.8;
+    const fillColor = over ? "#A6503B" : nearLimit ? "#C9A227" : toneFor(c.category);
+    return /*#__PURE__*/React.createElement("div", {
+      className: "cat-item",
+      key: c.category
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "cat-row"
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "cat-name",
+      onClick: () => openBudgetEdit(c.category)
+    }, c.category, /*#__PURE__*/React.createElement(PencilIcon, {
+      size: 10
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "cat-track",
+      onClick: () => onFilterCategory(c.category)
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "cat-fill",
+      style: {
+        width: `${Math.min(100, c.total / maxCat * 100)}%`,
+        background: fillColor
+      }
+    })), /*#__PURE__*/React.createElement("span", {
+      className: "cat-total"
+    }, "RM ", fmt(c.total))), budget != null && /*#__PURE__*/React.createElement("div", {
+      className: `budget-line ${over ? "over" : nearLimit ? "warn" : ""}`
+    }, "RM ", fmt(c.total), " of RM ", fmt(budget), " budget", over ? " — over" : nearLimit ? " — near limit" : ""), budgetEditing === c.category && /*#__PURE__*/React.createElement("div", {
+      className: "budget-editor"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "number",
+      inputMode: "decimal",
+      placeholder: "Monthly budget (RM)",
+      value: draft,
+      onChange: e => setDraft(e.target.value),
+      autoFocus: true
+    }), /*#__PURE__*/React.createElement("button", {
+      className: "mini-btn",
+      onClick: () => saveBudget(c.category)
+    }, "Save"), budget != null && /*#__PURE__*/React.createElement("button", {
+      className: "mini-btn ghost",
+      onClick: () => clearBudget(c.category)
+    }, "Clear")));
+  }))), /*#__PURE__*/React.createElement("section", {
+    className: "panel"
+  }, /*#__PURE__*/React.createElement("h2", null, "Monthly trend"), /*#__PURE__*/React.createElement("p", {
+    className: "panel-hint"
+  }, "Tap a column to jump to that month's log"), /*#__PURE__*/React.createElement("div", {
+    className: "bar-chart"
+  }, monthlyTrend.map(m => /*#__PURE__*/React.createElement("div", {
+    className: "bar-col",
+    key: m.month,
+    onClick: () => onFilterMonth(m.month)
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "bar-pair"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "bar-seg",
+    style: {
+      height: `${m.income / maxTrend * 140}px`,
+      background: "#5B7566"
+    },
+    title: `Income RM ${fmt(m.income)}`
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "bar-seg",
+    style: {
+      height: `${m.expense / maxTrend * 140}px`,
+      background: "#A6503B"
+    },
+    title: `Expense RM ${fmt(m.expense)}`
+  })), /*#__PURE__*/React.createElement("span", {
+    className: "bar-col-label"
+  }, m.label.split(" ")[0])))), /*#__PURE__*/React.createElement("div", {
+    className: "chart-legend"
+  }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("span", {
+    className: "legend-dot",
+    style: {
+      background: "#5B7566"
+    }
+  }), "Income"), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("span", {
+    className: "legend-dot",
+    style: {
+      background: "#A6503B"
+    }
+  }), "Expense"))), /*#__PURE__*/React.createElement("section", {
+    className: "panel"
+  }, /*#__PURE__*/React.createElement("h2", null, "Net balance over time"), /*#__PURE__*/React.createElement(NetLineChart, {
+    data: monthlyTrend.map(m => ({
+      ...m,
+      net: m.income - m.expense
+    }))
+  })));
 }
-
-function NetLineChart({ data }) {
-  if (data.length === 0) return <p className="empty">No data yet.</p>;
-  const w = 320, h = 140, pad = 10;
-  const values = data.map((d) => d.net);
-  const min = Math.min(0, ...values), max = Math.max(0, ...values);
+function NetLineChart({
+  data
+}) {
+  if (data.length === 0) return /*#__PURE__*/React.createElement("p", {
+    className: "empty"
+  }, "No data yet.");
+  const w = 320,
+    h = 140,
+    pad = 10;
+  const values = data.map(d => d.net);
+  const min = Math.min(0, ...values),
+    max = Math.max(0, ...values);
   const range = max - min || 1;
   const stepX = data.length > 1 ? (w - pad * 2) / (data.length - 1) : 0;
   const points = data.map((d, i) => {
@@ -608,73 +1155,145 @@ function NetLineChart({ data }) {
     return `${x},${y}`;
   });
   const zeroY = pad + (1 - (0 - min) / range) * (h - pad * 2);
-
-  return (
-    <div className="line-chart-wrap">
-      <svg viewBox={`0 0 ${w} ${h}`} width="100%" height={h} preserveAspectRatio="none">
-        <line x1={pad} y1={zeroY} x2={w - pad} y2={zeroY} stroke="#E4DFD3" strokeDasharray="4 3" />
-        <polyline points={points.join(" ")} fill="none" stroke="#C9A227" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
-        {data.map((d, i) => {
-          const [x, y] = points[i].split(",").map(Number);
-          return <circle key={d.month} cx={x} cy={y} r="3" fill="#C9A227" />;
-        })}
-      </svg>
-      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9.5, color: "var(--ink-soft)", fontFamily: "IBM Plex Mono, monospace", marginTop: 2 }}>
-        {data.map((d) => <span key={d.month}>{d.label.split(" ")[0]}</span>)}
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "line-chart-wrap"
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: `0 0 ${w} ${h}`,
+    width: "100%",
+    height: h,
+    preserveAspectRatio: "none"
+  }, /*#__PURE__*/React.createElement("line", {
+    x1: pad,
+    y1: zeroY,
+    x2: w - pad,
+    y2: zeroY,
+    stroke: "#E4DFD3",
+    strokeDasharray: "4 3"
+  }), /*#__PURE__*/React.createElement("polyline", {
+    points: points.join(" "),
+    fill: "none",
+    stroke: "#C9A227",
+    strokeWidth: "2.2",
+    strokeLinejoin: "round",
+    strokeLinecap: "round"
+  }), data.map((d, i) => {
+    const [x, y] = points[i].split(",").map(Number);
+    return /*#__PURE__*/React.createElement("circle", {
+      key: d.month,
+      cx: x,
+      cy: y,
+      r: "3",
+      fill: "#C9A227"
+    });
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      fontSize: 9.5,
+      color: "var(--ink-soft)",
+      fontFamily: "IBM Plex Mono, monospace",
+      marginTop: 2
+    }
+  }, data.map(d => /*#__PURE__*/React.createElement("span", {
+    key: d.month
+  }, d.label.split(" ")[0]))));
 }
-
-function EntryForm({ entryType, setEntryType, initial, onClose, onSubmitExpense, onSubmitIncome }) {
+function EntryForm({
+  entryType,
+  setEntryType,
+  initial,
+  onClose,
+  onSubmitExpense,
+  onSubmitIncome
+}) {
   const isEdit = !!initial;
   const [date, setDate] = useState(initial ? initial.date : todayStr());
   const [category, setCategory] = useState(initial && entryType === "expense" ? initial.category : CATEGORIES[0]);
   const [source, setSource] = useState(initial && entryType === "income" ? initial.source : INCOME_SOURCES[0]);
   const [amount, setAmount] = useState(initial ? String(initial.amount) : "");
   const [description, setDescription] = useState(initial ? initial.description || "" : "");
-
   const submit = () => {
     const amt = parseFloat(amount);
     if (!amt || amt <= 0 || !date) return;
-    if (entryType === "expense") onSubmitExpense({ date, category, amount: amt, description: description.trim() });
-    else onSubmitIncome({ date, source, amount: amt, description: description.trim() });
+    if (entryType === "expense") onSubmitExpense({
+      date,
+      category,
+      amount: amt,
+      description: description.trim()
+    });else onSubmitIncome({
+      date,
+      source,
+      amount: amt,
+      description: description.trim()
+    });
   };
-
-  return (
-    <div className="sheet-backdrop" onClick={onClose}>
-      <div className="sheet" onClick={(e) => e.stopPropagation()}>
-        <div className="sheet-head">
-          <h2>{isEdit ? "Edit entry" : "New entry"}</h2>
-          <button className="icon-btn" onClick={onClose} aria-label="Close"><XIcon size={18}/></button>
-        </div>
-        <div className="type-toggle">
-          <button className={entryType === "expense" ? "active" : ""} onClick={() => !isEdit && setEntryType("expense")} disabled={isEdit}>Expense</button>
-          <button className={entryType === "income" ? "active" : ""} onClick={() => !isEdit && setEntryType("income")} disabled={isEdit}>Income</button>
-        </div>
-        <label className="field"><span>Date</span><input type="date" value={date} onChange={(e) => setDate(e.target.value)} /></label>
-        <label className="field"><span>Amount (RM)</span><input type="number" inputMode="decimal" placeholder="0.00" value={amount} onChange={(e) => setAmount(e.target.value)} /></label>
-        {entryType === "expense" ? (
-          <label className="field"><span>Category</span>
-            <select value={category} onChange={(e) => setCategory(e.target.value)}>
-              {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-            </select>
-          </label>
-        ) : (
-          <label className="field"><span>Source</span>
-            <select value={source} onChange={(e) => setSource(e.target.value)}>
-              {INCOME_SOURCES.map((c) => <option key={c} value={c}>{c}</option>)}
-            </select>
-          </label>
-        )}
-        <label className="field"><span>Note (optional)</span><input type="text" placeholder="e.g. Bazar Ramadan" value={description} onChange={(e) => setDescription(e.target.value)} /></label>
-        <button className="submit" onClick={submit}>{isEdit ? "Save changes" : `Add ${entryType === "expense" ? "expense" : "income"}`}</button>
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "sheet-backdrop",
+    onClick: onClose
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "sheet",
+    onClick: e => e.stopPropagation()
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "sheet-head"
+  }, /*#__PURE__*/React.createElement("h2", null, isEdit ? "Edit entry" : "New entry"), /*#__PURE__*/React.createElement("button", {
+    className: "icon-btn",
+    onClick: onClose,
+    "aria-label": "Close"
+  }, /*#__PURE__*/React.createElement(XIcon, {
+    size: 18
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "type-toggle"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: entryType === "expense" ? "active" : "",
+    onClick: () => !isEdit && setEntryType("expense"),
+    disabled: isEdit
+  }, "Expense"), /*#__PURE__*/React.createElement("button", {
+    className: entryType === "income" ? "active" : "",
+    onClick: () => !isEdit && setEntryType("income"),
+    disabled: isEdit
+  }, "Income")), /*#__PURE__*/React.createElement("label", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("span", null, "Date"), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    value: date,
+    onChange: e => setDate(e.target.value)
+  })), /*#__PURE__*/React.createElement("label", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("span", null, "Amount (RM)"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    inputMode: "decimal",
+    placeholder: "0.00",
+    value: amount,
+    onChange: e => setAmount(e.target.value)
+  })), entryType === "expense" ? /*#__PURE__*/React.createElement("label", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("span", null, "Category"), /*#__PURE__*/React.createElement("select", {
+    value: category,
+    onChange: e => setCategory(e.target.value)
+  }, CATEGORIES.map(c => /*#__PURE__*/React.createElement("option", {
+    key: c,
+    value: c
+  }, c)))) : /*#__PURE__*/React.createElement("label", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("span", null, "Source"), /*#__PURE__*/React.createElement("select", {
+    value: source,
+    onChange: e => setSource(e.target.value)
+  }, INCOME_SOURCES.map(c => /*#__PURE__*/React.createElement("option", {
+    key: c,
+    value: c
+  }, c)))), /*#__PURE__*/React.createElement("label", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("span", null, "Note (optional)"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    placeholder: "e.g. Bazar Ramadan",
+    value: description,
+    onChange: e => setDescription(e.target.value)
+  })), /*#__PURE__*/React.createElement("button", {
+    className: "submit",
+    onClick: submit
+  }, isEdit ? "Save changes" : `Add ${entryType === "expense" ? "expense" : "income"}`)));
 }
-
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+ReactDOM.createRoot(document.getElementById("root")).render(/*#__PURE__*/React.createElement(App, null));
 </script>
 </body>
 </html>
